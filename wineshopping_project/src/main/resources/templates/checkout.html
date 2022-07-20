@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head th:replace="template.html :: header('cart')">
+
+<body>
+<header th:insert="template.html :: topmenu"></header>
+
+<div class="container">
+    <table class="table">
+        <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col"></th>
+            <th scope="col">Name</th>
+            <th scope="col">Category</th>
+            <th scope="col">Price</th>
+            <th scope="col">Count</th>
+            <th scope="col">Sub Total</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="cartLine, iStat:${cart.cartLines}">
+            <th scope="row" th:text="${iStat.index} +1"></th>
+            <td><img class="img-fluid col-6" th:src="@{'/photos/'+ ${cartLine.product.image}}" alt="product image"/></td>
+            <td th:text="${cartLine.product.name}">Sony WXMH 1000</td>
+            <td th:text="${cartLine.product.category}">Sony</td>
+            <td th:text="${#numbers.formatInteger(cartLine.product.price, 3, 'POINT')}  + ' VND'">4000000</td>
+            <td th:text="${cartLine.count}">1</td>
+            <td th:text="${#numbers.formatInteger(cartLine.product.price * cartLine.count, 3, 'POINT')}  + ' VND'">4000000</td>
+        </tr>
+        <tr>
+            <td colspan="3"></td>
+            <td colspan="3">Raw Total</td>
+            <td th:text="${#numbers.formatInteger(cart.rawTotal, 3, 'POINT')} + ' VND'">4000000</td>
+        </tr>
+        <tr>
+            <td colspan="3"></td>
+            <td colspan="3">Discount</td>
+            <td th:text="${#numbers.formatInteger(-cart.discount, 3, 'POINT') + ' VND'}">4000000</td>
+        </tr>
+        <tr>
+            <td colspan="3"></td>
+            <td colspan="3">VAT</td>
+            <td th:text="${#numbers.formatInteger(cart.vatTax, 3, 'POINT')}  + ' VND'">4000000</td>
+        </tr>
+        <tr>
+            <td colspan="3"></td>
+            <td colspan="3">Final Total</td>
+            <td th:text="${#numbers.formatInteger(cart.total, 3, 'POINT')} + ' VND'">4000000</td>
+        </tr>
+
+        <a  href="/product/order">Next Step</a>
+        </tbody>
+    </table>
+</div>
+</div>
+</body>
+
+</html>
